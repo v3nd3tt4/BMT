@@ -69,7 +69,12 @@
 					<td>Nomor Handphone</td>
 					<td>:</td>
 					<td><?=$ambil->no_hp?></td>
-				</tr>				
+				</tr>	
+					<tr>
+					<td>Alamat</td>
+					<td>:</td>
+					<td><?=$ambil->alamat?></td>
+				</tr>	
 			</table>
 		</div>
 	</div>

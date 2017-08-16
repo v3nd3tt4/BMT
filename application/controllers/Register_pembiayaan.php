@@ -17,7 +17,8 @@ class Register_pembiayaan extends CI_Controller {
 			'title' => 'register_pembiayaan',
 			'page' => 'register_pembiayaan',
 			//'maps' => $this->Model->list_data('lokasi')
-			'pembiayaan' => $this->db->query('select pokok_pembiayaan, register_pembiayaan.id, register_pembiayaan.no_anggota, anggota.nama, register_pembiayaan.jenis_pembiayaan,  register_pembiayaan.fee,  register_pembiayaan.tempo from register_pembiayaan join anggota on register_pembiayaan.no_anggota=anggota.id')->result()
+			'pembiayaan' => $this->db->query('select pokok_pembiayaan, register_pembiayaan.id, register_pembiayaan.no_anggota, anggota.nama, register_pembiayaan.jenis_pembiayaan,  register_pembiayaan.fee,  register_pembiayaan.tempo from register_pembiayaan join anggota on register_pembiayaan.no_anggota=anggota.id')->result(),
+
 			//'produk' => $this->Model->list_data('produk')
 		);
 		$this->load->view('template/wrapper',$data);
@@ -118,6 +119,19 @@ class Register_pembiayaan extends CI_Controller {
 		);
 
 		$this->load->view('cetak_pembiayaan',$data);
+	}
+
+	public function sudah_lunas(){
+		$data= array(
+			'halaman' => 'admin',
+			'title' => 'register_pembiayaan_sudah_lunas',
+			'page' => 'register_pembiayaan_sudah_lunas',
+			//'maps' => $this->Model->list_data('lokasi')
+			'pembiayaan' => $this->db->query('select pokok_pembiayaan, register_pembiayaan.id, register_pembiayaan.no_anggota, anggota.nama, register_pembiayaan.jenis_pembiayaan,  register_pembiayaan.fee,  register_pembiayaan.tempo from register_pembiayaan join anggota on register_pembiayaan.no_anggota=anggota.id')->result(),
+
+			//'produk' => $this->Model->list_data('produk')
+		);
+		$this->load->view('template/wrapper',$data);
 	}
 
 }

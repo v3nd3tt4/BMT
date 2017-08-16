@@ -21,9 +21,14 @@
 	<?php
 		$no=1;
 		foreach($pembiayaan as $data){
+      $cek_sama_ga = $this->Model->ambil('id_register_pembiayaan', $data->id, 'transaksi_pembiayaan');
+
+      $jumlah_sudah_trx = count($cek_sama_ga->result());
+
+      if($jumlah_sudah_trx != $data->tempo){
 	?>
 		<tr>
-			<td><?=$no++;?>.</td>
+			<td><?=$no++;?>. </td>
 			<td><?=$data->no_anggota?></td>
 			<td><?=$data->nama?></td>
 			<td><?=$data->jenis_pembiayaan?></td>
@@ -41,6 +46,7 @@
 			</td>
 		</tr>
 	<?php
+  }
 		}
 	?>
 	</tbody>

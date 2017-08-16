@@ -106,7 +106,7 @@
         	</div>
         	<div class="form-group">
         		<label>Nomor HP:</label>
-        		<input type="number" class="form-control" name="nomor_hp" id="nomor_hp" required="required">
+        		<input type="text" class="form-control" name="nomor_hp" id="nomor_hp" required="required">
         	</div>
         	<input type="submit" class="btn btn-primary" value="Submit" />
         </form>

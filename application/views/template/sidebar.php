@@ -36,6 +36,7 @@
                     <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>Pembiayaan</a>
                     <ul class="nav-pills nav-stacked" style="list-style-type:none;">
                         <li <?php if($title=='register_pembiayaan'){?>class="active"<?php }; ?>><a href="<?=base_url()?>register_pembiayaan"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Pendaftaran</a></li>
+                        <li <?php if($title=='register_pembiayaan_sudah_lunas'){?>class="active"<?php }; ?>><a href="<?=base_url()?>register_pembiayaan/sudah_lunas"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Sudah Lunas</a></li>
                         <!--<li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Simpanan</a></li>
                         <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Pembiayaan</a></li> 
                         <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Perhitungan Jasa Simpanan</a></li>-->

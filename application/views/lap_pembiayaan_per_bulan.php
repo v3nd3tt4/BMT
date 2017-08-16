@@ -2,7 +2,7 @@
 	Laporan Pembiayaan Per Bulan
 </h1>
 <form action="<?=base_url()?>lap_pembiayaan_per_bulan/lihat" method="POST">
-	<<div class="form-group">
+	<div class="form-group">
 		<label>Bulan</label>
 		<select  class="form-control" style="max-width: 200px" name="bulan_lap_bulan" id="bulan_lap_bulan">
 			<option>--pilih--</option>
