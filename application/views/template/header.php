@@ -21,12 +21,16 @@
     <link href="<?=base_url()?>assets/font-awesome-4.6.1/css/font-awesome.min.css" rel="stylesheet">
     <!-- jQuery -->
     <script src="<?=base_url()?>assets/jquery-2.2.2.min.js"></script>
-    <script src="<?=base_url()?>assets/myjs.js"></script>
+    <!-- <script src="<?=base_url()?>assets/myjs.js"></script> -->
     <script src="<?=base_url()?>assets/DataTables-1.10.9/DataTables-1.10.9/media/js/jquery.dataTables.js"></script>
     <script src="<?=base_url()?>assets/DataTables-1.10.9/DataTables-1.10.9/media/js/dataTables.bootstrap.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="<?=base_url()?>assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="<?=base_url()?>assets/ckeditor_4.5.4_standard/ckeditor/ckeditor.js"></script>
+
+    <?php 
+        include './assets/myjs.php';
+    ?>
     
     
 
