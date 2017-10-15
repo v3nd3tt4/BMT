@@ -51,7 +51,7 @@
 		$no=1;
 		foreach($transaksi as $data){
 	?>
-		<tr>
+		<tr <?php if(date('d', strtotime($data->tanggal)) > date('d',strtotime($semua->tanggal))){ echo 'style="background: red; color: #fff"';}?>>
             <td><?=$no++?></td>
 			<td>Rp. <?=number_format($data->nominal)?></td>			
 			<td><?=$data->tanggal?></td>

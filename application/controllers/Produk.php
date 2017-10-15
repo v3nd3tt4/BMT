@@ -96,5 +96,21 @@ class Produk extends CI_Controller {
 
 		echo json_encode($data);
 	}
+	
+	public function detail_produk($id_produk){
+		$data= array(
+			'halaman' => 'admin',
+			'title' => 'produk',
+			'page' => 'detail-produk',
+			//'maps' => $this->Model->list_data('lokasi')
+			'produk' => $id_produk,
+			'list' => $this->db->query("SELECT transaksi_simpanan.id_register_simpanan, anggota.nama, sum(transaksi_simpanan.nominal) as nominal FROM anggota 
+left join register_simpanan on anggota.id = register_simpanan.no_anggota
+left join transaksi_simpanan on transaksi_simpanan.id_register_simpanan = register_simpanan.id_register
+where transaksi_simpanan.keterangan='setor' and register_simpanan.id_produk = '$id_produk'
+group by transaksi_simpanan.id_register_simpanan")
+		);
+		$this->load->view('template/wrapper',$data);
+	}
 
 }

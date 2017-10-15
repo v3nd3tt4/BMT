@@ -133,5 +133,43 @@ class Register_pembiayaan extends CI_Controller {
 		);
 		$this->load->view('template/wrapper',$data);
 	}
+	
+	public function mandek(){
+		$data= array(
+			'halaman' => 'admin',
+			'title' => 'register_pembiayaan_mandek',
+			'page' => 'cek_npl',
+		);
+		$this->load->view('template/wrapper',$data);
+	}
+	
+	public function data_npl(){
+		echo '<table class="table table-striped">';
+			echo '<tr>';
+				echo '<td>No. </td>';
+				echo '<td>Nama</td>';
+				echo '<td>Pembiayaan</td>';
+			echo '</tr>';
+		$no = 1;
+		
+		$tanggal = @$this->input->post('tanggal', true);
+		
+		$data_reg_pembiayaan = $this->db->get_where('register_pembiayaan', array('tanggal' => $tanggal));
+		
+		foreach($data_reg_pembiayaan->result() as $list){
+			
+			$cek_trx = $this->db->get_where('transaksi_pembiayaan', array('id_register_pembiayaan' => $list->id));
+			
+			if(count($cek_trx->result()) < $list->tempo){
+				echo '<tr>';
+					echo '<td>'.$no.'</td>';
+					echo '<td>'.$list->no_anggota.'</td>';
+					echo '<td>Pembiayaan</td>';
+				echo '</tr>';
+			}
+			$no++;
+		}
+		echo '</table>';
+	}
 
 }

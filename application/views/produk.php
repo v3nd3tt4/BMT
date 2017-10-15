@@ -27,6 +27,8 @@
 			<a href="#" class="hapus-produk" id="<?=$data->id_produk?>">Hapus</a>
 			 | 
 			<a href="#" class="edit-produk" id="<?=$data->id_produk?>">Edit</a>
+			 |
+			<a href="<?=base_url()?>produk/detail_produk/<?=$data->id_produk?>" class="detail-produk" >Detail</a>
 			</td>
 		</tr>
 	<?php
