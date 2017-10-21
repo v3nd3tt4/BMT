@@ -146,29 +146,75 @@ class Register_pembiayaan extends CI_Controller {
 	public function data_npl(){
 		echo '<table class="table table-striped">';
 			echo '<tr>';
-				echo '<td>No. </td>';
-				echo '<td>Nama</td>';
-				echo '<td>Pembiayaan</td>';
+				echo '<th>No. </th>';
+				echo '<th>Nama</th>';
+				echo '<th>Tanggal Jatuh Tempo</th>';
+				echo '<th>Tanggal Terakhir Bayar</th>';
+				echo '<th>Detail</th>';
+				echo '<th>Pembiayaan</th>';
+				echo '<th>Sub Total</th>';
 			echo '</tr>';
-		$no = 1;
+		
 		
 		$tanggal = @$this->input->post('tanggal', true);
 		
-		$data_reg_pembiayaan = $this->db->get_where('register_pembiayaan', array('tanggal' => $tanggal));
-		
+		$pecah = explode('-', $tanggal);
+		$tahun = $pecah[0];
+		$bulan = $pecah[1];
+		$tgl = $pecah[2];
+
+		$tglHariIni = new DateTime(date('Y-m-d'));
+		$data_reg_pembiayaan = $this->db->query("select anggota.id as id_anggota, register_pembiayaan.id as id_register_pembiayaan, anggota.nama as nama_anggota, register_pembiayaan.fee as fee, register_pembiayaan.tempo as tempo, register_pembiayaan.pokok_pembiayaan as pokok_pembiayaan, day(register_pembiayaan.tanggal) as tglJthTempo, register_pembiayaan.tanggal as tglRegister from register_pembiayaan join anggota on anggota.id = register_pembiayaan.no_anggota
+			where day(register_pembiayaan.tanggal) = '$tgl'
+			");
+		$tot = 0;
+		$no = 1;
 		foreach($data_reg_pembiayaan->result() as $list){
-			
-			$cek_trx = $this->db->get_where('transaksi_pembiayaan', array('id_register_pembiayaan' => $list->id));
-			
+			$id_register_pembiayaan = $list->id_register_pembiayaan;
+			$angsuran = ($list->fee + $list->pokok_pembiayaan) / $list->tempo ;
+			$cek_trx = $this->db->get_where('transaksi_pembiayaan', array('id_register_pembiayaan' => $id_register_pembiayaan));
+			$cekLastTrx = $this->db->query("select * from transaksi_pembiayaan where id_register_pembiayaan = '$id_register_pembiayaan' order by tanggal DESC Limit 1");
+			if($cekLastTrx->num_rows() != 0){
+				$re = $cekLastTrx->row()->tanggal;
+				// $tglTerakhirBayar = new DateTime($cekLastTrx->row()->tanggal);
+
+				$tglTerakhirBayar = new DateTime(date('Y-m',strtotime($cekLastTrx->row()->tanggal)).'-'.$list->tglJthTempo);
+			}else{
+				$re = 'belum pernah bayar';
+				$tglTerakhirBayar = new DateTime($list->tglRegister);
+			} 
 			if(count($cek_trx->result()) < $list->tempo){
-				echo '<tr>';
-					echo '<td>'.$no.'</td>';
-					echo '<td>'.$list->no_anggota.'</td>';
-					echo '<td>Pembiayaan</td>';
-				echo '</tr>';
+				$difference = $tglHariIni->diff($tglTerakhirBayar);
+				$m = $difference->format('%m');
+				$y = $difference->format('%y');
+				$d = $difference->format('%d');
+				$diff = date_diff($tglTerakhirBayar, $tglHariIni);
+				$month = $diff->y * 12 + $diff->m + $diff->d/30;
+				
+				if($month >= 1){
+					$monthTampil = number_format($month, 1);
+					$monthHitung = explode('.',$monthTampil);
+					$monthHitung = $monthHitung[0];
+					$subTotal = $monthHitung * $angsuran; 
+					$tot += $subTotal;
+					echo '<tr>';
+						echo '<td>'.$no++.'.</td>';
+						echo '<td>'.$list->nama_anggota.'</td>';
+						echo '<td>'.$list->tglJthTempo.'</td>';	
+						echo '<td>'. $re.'</td>';
+						echo '<td>'.$monthTampil.' Bulan </td>';
+						echo '<td>Rp. '.number_format($angsuran).'</td>';
+						echo '<td>Rp. '.number_format($subTotal, 2).' </td>';
+						
+					echo '</tr>';
+				}
 			}
-			$no++;
+			// $no++;
 		}
+			echo '<tr>';
+				echo '<td colspan="6" style="text-align: right"><b>Total Pembiayaan Yang Belum Dibayar :</b></td>';
+				echo '<td>Rp. '.number_format($tot).'</td>';
+			echo '<tr>';
 		echo '</table>';
 	}
 

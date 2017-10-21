@@ -2,7 +2,7 @@
 <form id="form_cek_npl">
 	<div class="form-group">
 		<label>Pilih Tanggal:</label>
-		<input name="tanggal" type="date" class="form-control"/>
+		<input name="tanggal" type="date" class="form-control" required />
 	</div>
 	<div class="form-group">
 		<button type="submit" class="btn btn-primary">Cek</button>

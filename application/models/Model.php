@@ -45,4 +45,23 @@ class Model extends CI_Model{
   	function cek_user($data, $tabel){
   		return $this->db->get_where($tabel,$data);
   	}
+
+  	function selisih($date1, $date2){
+        $datetime1 = new DateTime($date1);
+        $datetime2 = new DateTime($date2);
+        $difference = $datetime1->diff($datetime2);
+        //echo $difference->format('%y Tahun %m Bulan %d Hari');
+        $m = $difference->format('%m');
+        $y = $difference->format('%y');
+        if($y > 0){
+          echo $difference->format('%y Tahun %m Bulan %d Hari');
+        }else{
+          if($m > 0){
+            echo $difference->format('%m Bulan %d Hari');
+          }
+          else{
+            echo $difference->format('%d Hari');
+          }
+        }
+    }
 }
