@@ -1,3 +1,4 @@
+<h4>Cek NPL</h4><hr/>
 <marquee>belum bisa digunakan, masih tahap pengembangan</marquee>
 <form id="form_cek_npl">
 	<div class="form-group">
@@ -25,6 +26,44 @@
 					$('#result_npl').html(msg);
 				}
 			});
+		});
+		$(document).on('click', '#hitugNpl', function(e){
+			e.preventDefault();
+		    var count = 0;
+		    var table_abc = document.getElementsByClassName("checkbox1");
+		    for (var i = 0; table_abc[i]; ++i) {
+		        if (table_abc[i].checked) {
+		            var value = table_abc[i].value;
+		            count += Number(table_abc[i].value);
+		        }
+		    }
+		    $('.resultManualNpl').show();
+		    $('#mandekManual').html('Rp. '+addCommas(count));
+		});
+
+		function addCommas(nStr)
+		{
+			nStr += '';
+			x = nStr.split('.');
+			x1 = x[0];
+			x2 = x.length > 1 ? '.' + x[1] : '';
+			var rgx = /(\d+)(\d{3})/;
+			while (rgx.test(x1)) {
+			    x1 = x1.replace(rgx, '$1' + ',' + '$2');
+			}
+			return x1 + x2;
+		}
+
+		$.fn.digits = function(){ 
+		    return this.each(function(){ 
+		        $(this).text( $(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") ); 
+		    })
+		}
+
+		$(document).on('change', '.select_all', function(e) {
+			e.preventDefault();
+		    var c = this.checked;
+    		$(':checkbox').prop('checked',c);
 		});
 	});
 </script>

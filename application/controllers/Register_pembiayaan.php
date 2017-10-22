@@ -144,8 +144,12 @@ class Register_pembiayaan extends CI_Controller {
 	}
 	
 	public function data_npl(){
+		echo '<div class="pull-right">';
+			echo '<button id="hitugNpl" class="btn btn-danger"><i class="fa fa-refresh"></i> Hitung Manual</button><br/><br/>';
+		echo '</div>';
 		echo '<table class="table table-striped">';
 			echo '<tr>';
+				echo '<th><input type="checkbox"  class="checkbox select_all "></th>';
 				echo '<th>No. </th>';
 				echo '<th>Nama</th>';
 				echo '<th>Tanggal Jatuh Tempo</th>';
@@ -198,22 +202,25 @@ class Register_pembiayaan extends CI_Controller {
 					$subTotal = $monthHitung * $angsuran; 
 					$tot += $subTotal;
 					echo '<tr>';
+						echo '<td><input name="selector[]" type="checkbox" value="'.$subTotal.'" class="checkbox checkbox1 "></td>';
 						echo '<td>'.$no++.'.</td>';
 						echo '<td><a href="'.base_url().'register_pembiayaan/transaksi/'.$id_register_pembiayaan.'" target="_blank">'.$list->nama_anggota.'</a></td>';
-						echo '<td>'.$list->tglJthTempo.'</td>';	
+						echo '<td>'.$list->tglJthTempo.'</td>';
 						echo '<td>'. $re.'</td>';
 						echo '<td>'.$monthTampil.' Bulan </td>';
 						echo '<td>Rp. '.number_format($angsuran).'</td>';
 						echo '<td>Rp. '.number_format($subTotal, 2).' </td>';
-						
 					echo '</tr>';
 				}
 			}
-			// $no++;
 		}
 			echo '<tr>';
-				echo '<td colspan="6" style="text-align: right"><b>Total Pembiayaan Yang Belum Dibayar :</b></td>';
+				echo '<td colspan="7" style="text-align: right"><b>Total Pembiayaan Yang Belum Dibayar :</b></td>';
 				echo '<td>Rp. '.number_format($tot).'</td>';
+			echo '<tr>';
+			echo '<tr style="display: none; color: red" class="resultManualNpl">';
+				echo '<td colspan="7" style="text-align: right"><b>Total Pembiayaan Yang Belum Dibayar (Manual) :</b></td>';
+				echo '<td><div id="mandekManual"></div></td>';
 			echo '<tr>';
 		echo '</table>';
 	}
