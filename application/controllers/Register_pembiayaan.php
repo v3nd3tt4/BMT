@@ -201,6 +201,11 @@ class Register_pembiayaan extends CI_Controller {
 					$monthHitung = $monthHitung[0];
 					$subTotal = $monthHitung * $angsuran; 
 					$tot += $subTotal;
+					// if(date('d', strtotime($cekLastTrx->row()->tanggal)) > date('d',strtotime($list->tglRegister))){ $trColor =  'style="background: red; color: #fff"';
+					// }else{
+					// 	$trColor = '';
+					// }
+					// echo '<tr '.$trColor.'>';
 					echo '<tr>';
 						echo '<td><input name="selector[]" type="checkbox" value="'.$subTotal.'" class="checkbox checkbox1 "></td>';
 						echo '<td>'.$no++.'.</td>';

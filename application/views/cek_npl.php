@@ -38,7 +38,13 @@
 		        }
 		    }
 		    $('.resultManualNpl').show();
-		    $('#mandekManual').html('Rp. '+addCommas(count));
+
+		    $('#mandekManual').html('Rp. '+addCommas(Math.round(count)));
+		    var val = count;
+					
+			// $('#mandekManual').text( val !== '' ? 'Rp. '+val : '(empty)' );
+
+		    // $('#mandekManual').number( true, 2 );
 		});
 
 		function addCommas(nStr)
