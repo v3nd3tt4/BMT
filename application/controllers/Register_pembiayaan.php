@@ -192,14 +192,14 @@ class Register_pembiayaan extends CI_Controller {
 				$month = $diff->y * 12 + $diff->m + $diff->d/30;
 				
 				if($month >= 1){
-					$monthTampil = number_format($month, 1);
+					$monthTampil = number_format($month, 2);
 					$monthHitung = explode('.',$monthTampil);
 					$monthHitung = $monthHitung[0];
 					$subTotal = $monthHitung * $angsuran; 
 					$tot += $subTotal;
 					echo '<tr>';
 						echo '<td>'.$no++.'.</td>';
-						echo '<td>'.$list->nama_anggota.'</td>';
+						echo '<td><a href="'.base_url().'register_pembiayaan/transaksi/'.$id_register_pembiayaan.'" target="_blank">'.$list->nama_anggota.'</a></td>';
 						echo '<td>'.$list->tglJthTempo.'</td>';	
 						echo '<td>'. $re.'</td>';
 						echo '<td>'.$monthTampil.' Bulan </td>';
