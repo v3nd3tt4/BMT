@@ -41,8 +41,45 @@ class Lap_bulan extends CI_Controller
 			'tarik' => $this->db->query("select sum(nominal) as tarik from transaksi_simpanan where keterangan='tarik' and month(tanggal_transaksi)=$bulan and year(tanggal_transaksi)=$tahun")->result(),
 			'pembiayaan' => $this->db->query("select sum(pokok_pembiayaan) as pembiayaan from register_pembiayaan where month(tanggal)=$bulan and year(tanggal)=$tahun")->result(),
 			'angsuran' => $this->db->query("select sum(nominal) as cicilan from transaksi_pembiayaan where month(tanggal)=$bulan and year(tanggal)=$tahun")->result(),
-			'rincian' => $this->db->query("select *, sum(nominal) as n from transaksi_simpanan join register_simpanan on transaksi_simpanan.id_register_simpanan=register_simpanan.id_register join produk on register_simpanan.id_produk=produk.id_produk  where month(tanggal_transaksi)=$bulan and year(tanggal_transaksi)=$tahun and transaksi_simpanan.keterangan='setor' group by produk.id_produk")->result(),
-			'rincian_tarik' => $this->db->query("select *, sum(nominal) as n from transaksi_simpanan join register_simpanan on transaksi_simpanan.id_register_simpanan=register_simpanan.id_register join produk on register_simpanan.id_produk=produk.id_produk  where month(tanggal_transaksi)=$bulan and year(tanggal_transaksi)=$tahun and transaksi_simpanan.keterangan='tarik' group by produk.id_produk")->result()
+			'rincian' => $this->db->query("
+				SELECT 
+					produk.id_produk,
+					produk.nama_produk,
+					register_simpanan.id_register,
+					SUM(transaksi_simpanan.nominal) AS n
+				FROM 
+					transaksi_simpanan
+				JOIN 
+					register_simpanan ON transaksi_simpanan.id_register_simpanan = register_simpanan.id_register
+				JOIN 
+					produk ON register_simpanan.id_produk = produk.id_produk
+				WHERE 
+					MONTH(tanggal_transaksi) = ? 
+					AND YEAR(tanggal_transaksi) = ?
+					AND transaksi_simpanan.keterangan = 'setor'
+				GROUP BY 
+					produk.id_produk, produk.nama_produk, register_simpanan.id_register
+			", array($bulan, $tahun))->result(),
+
+			'rincian_tarik' => $this->db->query("
+				SELECT 
+					produk.id_produk,
+					produk.nama_produk,
+					register_simpanan.id_register,
+					SUM(transaksi_simpanan.nominal) AS n
+				FROM 
+					transaksi_simpanan
+				JOIN 
+					register_simpanan ON transaksi_simpanan.id_register_simpanan = register_simpanan.id_register
+				JOIN 
+					produk ON register_simpanan.id_produk = produk.id_produk
+				WHERE 
+					MONTH(tanggal_transaksi) = ? 
+					AND YEAR(tanggal_transaksi) = ?
+					AND transaksi_simpanan.keterangan = 'tarik'
+				GROUP BY 
+					produk.id_produk, produk.nama_produk, register_simpanan.id_register
+			", array($bulan, $tahun))->result()
 		);
 		$this->load->view('cetak_lap_bulan',$data);
 		
